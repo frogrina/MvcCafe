@@ -24,7 +24,7 @@ namespace MvcCafe.Controllers
         public async Task<IActionResult> Index(string searchString)
         {
             var cafes = from m in _context.Cafe
-                         select m;
+                        select m;
 
             if (!String.IsNullOrEmpty(searchString))
             {
@@ -32,6 +32,28 @@ namespace MvcCafe.Controllers
             }
 
             return View(await cafes.ToListAsync());
+        }
+        public async Task<IActionResult> Admin(string password, string searchString)
+        {
+            var correctpassword = "frog";
+            if (password == correctpassword)
+            {
+               
+
+                var cafes = from m in _context.Cafe
+                            select m;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    cafes = cafes.Where(s => s.Name!.Contains(searchString));
+                }
+
+                return View(await cafes.ToListAsync());
+            }
+            else
+            {
+                return View(new List <Cafe>());
+            }
         }
         // GET: Cafes/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -152,7 +174,7 @@ namespace MvcCafe.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        
+
         private bool CafeExists(int id)
         {
             return _context.Cafe.Any(e => e.Id == id);

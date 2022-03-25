@@ -9,5 +9,6 @@ namespace MvcCafe.Models
         public string? Description { get; set; }
         public decimal CurrentLoad { get; set; }
         public decimal MaxLoad { get; set; }
+ // ownerid 
     }
 }
