@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using MvcCafe.Data;
 using MvcCafe.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<MvcCafeContext>(options =>

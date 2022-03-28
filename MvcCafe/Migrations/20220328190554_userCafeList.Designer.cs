@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcCafe.Data;
 
@@ -11,9 +12,10 @@ using MvcCafe.Data;
 namespace MvcCafe.Migrations
 {
     [DbContext(typeof(MvcCafeContext))]
-    partial class MvcCafeContextModelSnapshot : ModelSnapshot
+    [Migration("20220328190554_userCafeList")]
+    partial class userCafeList
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

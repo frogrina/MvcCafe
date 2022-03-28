@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MvcCafe.Data;
 
@@ -11,9 +12,10 @@ using MvcCafe.Data;
 namespace MvcCafe.Migrations
 {
     [DbContext(typeof(MvcCafeContext))]
-    partial class MvcCafeContextModelSnapshot : ModelSnapshot
+    [Migration("20220328184907_userIdentity")]
+    partial class userIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,45 +44,9 @@ namespace MvcCafe.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Cafes");
-                });
-
-            modelBuilder.Entity("MvcCafe.Models.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Login")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("MvcCafe.Models.Cafe", b =>
-                {
-                    b.HasOne("MvcCafe.Models.User", null)
-                        .WithMany("Cafes")
-                        .HasForeignKey("UserId");
-                });
-
-            modelBuilder.Entity("MvcCafe.Models.User", b =>
-                {
-                    b.Navigation("Cafes");
+                    b.ToTable("Cafe");
                 });
 #pragma warning restore 612, 618
         }

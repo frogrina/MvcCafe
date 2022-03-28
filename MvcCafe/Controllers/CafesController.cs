@@ -1,10 +1,4 @@
-﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MvcCafe.Data;
 using MvcCafe.Models;
@@ -27,48 +21,20 @@ namespace MvcCafe.Controllers
 
         public async Task<IActionResult> Browse()
         {
-            var cafes = await _context.Cafe.ToListAsync();
+            var cafes = await _context.Cafes.ToListAsync();
             return View(cafes);
         }
 
         public async Task<IActionResult> Admin(string ownerId)
         {
-            var adminPassword = "frog";
-            if (ownerId == adminPassword)
-            {
-                var cafes = from m in _context.Cafe
-                            select m;
-
-                ViewResult viewResult = View(await cafes.ToListAsync());
-                viewResult.ViewData.Add("ownerId", ownerId);
-                return viewResult;
-            }
-            else if (!string.IsNullOrEmpty(ownerId))
-            {
-                var cafesWithOwnerEnumerable = _context.Cafe.Where(c => c.OwnerId.ToString() == ownerId);
-                var cafes = await cafesWithOwnerEnumerable.ToListAsync();
-                ViewResult viewResult = View(cafes);
-                viewResult.ViewData.Add("ownerId", ownerId);
-                return viewResult;
-            }
-
-            return View(new List<Cafe>());
+            return null;
         }
 
         public async Task<IActionResult> IncrementCurrentLoad(int id, string ownerId, int incrementValue)
         {
-            var cafe = await _context.Cafe.FindAsync(id);
-            if (cafe.OwnerId.ToString().Equals(ownerId) || ownerId.Equals("frog"))
-            {
-                cafe.CurrentLoad += incrementValue;
-                _context.Update(cafe);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Admin", "Cafes", new RouteValueDictionary { { "ownerId", ownerId } });
-            }
-            else return RedirectToAction("Browse", "Cafes");
+            return null;
         }
 
-        // GET: Cafes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -76,7 +42,7 @@ namespace MvcCafe.Controllers
                 return NotFound();
             }
 
-            var cafe = await _context.Cafe
+            var cafe = await _context.Cafes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cafe == null)
             {
@@ -86,22 +52,17 @@ namespace MvcCafe.Controllers
             return View(cafe);
         }
 
-        // GET: Cafes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Cafes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,CurrentLoad,MaxLoad")] Cafe cafe)
         {
             if (ModelState.IsValid)
             {
-                cafe.OwnerId = Guid.NewGuid();
                 _context.Add(cafe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -117,7 +78,7 @@ namespace MvcCafe.Controllers
                 return NotFound();
             }
 
-            var cafe = await _context.Cafe.FindAsync(id);
+            var cafe = await _context.Cafes.FindAsync(id);
             if (cafe == null)
             {
                 return NotFound();
@@ -125,9 +86,6 @@ namespace MvcCafe.Controllers
             return View(cafe);
         }
 
-        // POST: Cafes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CurrentLoad,MaxLoad")] Cafe cafe)
@@ -160,7 +118,6 @@ namespace MvcCafe.Controllers
             return View(cafe);
         }
 
-        // GET: Cafes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,7 +125,7 @@ namespace MvcCafe.Controllers
                 return NotFound();
             }
 
-            var cafe = await _context.Cafe
+            var cafe = await _context.Cafes
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (cafe == null)
             {
@@ -178,20 +135,19 @@ namespace MvcCafe.Controllers
             return View(cafe);
         }
 
-        // POST: Cafes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cafe = await _context.Cafe.FindAsync(id);
-            _context.Cafe.Remove(cafe);
+            var cafe = await _context.Cafes.FindAsync(id);
+            _context.Cafes.Remove(cafe);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CafeExists(int id)
         {
-            return _context.Cafe.Any(e => e.Id == id);
+            return _context.Cafes.Any(e => e.Id == id);
         }
     }
 }

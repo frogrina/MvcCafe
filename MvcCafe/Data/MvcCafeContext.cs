@@ -1,20 +1,15 @@
-﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using MvcCafe.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace MvcCafe.Data
 {
     public class MvcCafeContext : DbContext
     {
-        public MvcCafeContext (DbContextOptions<MvcCafeContext> options)
+        public MvcCafeContext(DbContextOptions<MvcCafeContext> options)
             : base(options)
         {
         }
 
-        public DbSet<MvcCafe.Models.Cafe> Cafe { get; set; }
+        public DbSet<Models.Cafe> Cafes { get; set; }
+        public DbSet<Models.User> Users { get; set; }
     }
 }
