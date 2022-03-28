@@ -6,14 +6,8 @@
 
 <h1>Список ресторанов</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<form asp-controller="Cafes" asp-action="Admin">
-    <p>
-        Owner: <input type="password" name="ownerId" />
-        <input type="submit" value="OK" />
-    </p>
+
+<form asp-controller="Cafes" asp-action="Browse">
 </form>
 <table class="table">
     <thead>
@@ -30,9 +24,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.MaxLoad)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.OwnerId)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -46,21 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                
-                <a asp-action="IncrementCurrentLoad" asp-route-id="@item.Id" asp-route-ownerId="@item.OwnerId" asp-route-incrementValue="-1">-</a>
                 @Html.DisplayFor(modelItem => item.CurrentLoad)
-                <a asp-action="IncrementCurrentLoad" asp-route-id="@item.Id" asp-route-ownerId="@item.OwnerId" asp-route-incrementValue="1">+</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MaxLoad)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.OwnerId)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

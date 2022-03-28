@@ -20,41 +20,50 @@ namespace MvcCafe.Controllers
             _context = context;
         }
 
-        // GET: Cafes
-        public async Task<IActionResult> Index(string searchString)
+        public IActionResult Index()
         {
-            var cafes = from m in _context.Cafe
-                        select m;
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                cafes = cafes.Where(s => s.Name!.Contains(searchString));
-            }
-
-            return View(await cafes.ToListAsync());
+            return View();
         }
-        public async Task<IActionResult> Admin(string password, string searchString)
-        {
-            var correctpassword = "frog";
-            if (password == correctpassword)
-            {
-               
 
+        public async Task<IActionResult> Browse()
+        {
+            var cafes = await _context.Cafe.ToListAsync();
+            return View(cafes);
+        }
+
+        public async Task<IActionResult> Admin(string ownerId)
+        {
+            var adminPassword = "frog";
+            if (ownerId == adminPassword)
+            {
                 var cafes = from m in _context.Cafe
                             select m;
 
-                if (!String.IsNullOrEmpty(searchString))
-                {
-                    cafes = cafes.Where(s => s.Name!.Contains(searchString));
-                }
-
                 return View(await cafes.ToListAsync());
             }
-            else
+            else if (!string.IsNullOrEmpty(ownerId))
             {
-                return View(new List <Cafe>());
+                var cafesWithOwnerEnumerable = _context.Cafe.Where(c => c.OwnerId.ToString() == ownerId);
+                var cafes = await cafesWithOwnerEnumerable.ToListAsync();
+                return View(cafes);
             }
+
+            return View(new List<Cafe>());
         }
+
+        public async Task<IActionResult> IncrementCurrentLoad(int id, string ownerId, int incrementValue)
+        {
+            var cafe = await _context.Cafe.FindAsync(id);
+            if (cafe.OwnerId.ToString().Equals(ownerId))
+            {
+                cafe.CurrentLoad += incrementValue;
+                _context.Update(cafe);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Admin", "Cafes", new RouteValueDictionary { { "ownerId", ownerId } });
+            }
+            else return RedirectToAction("Browse", "Cafes");
+        }
+
         // GET: Cafes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -88,6 +97,7 @@ namespace MvcCafe.Controllers
         {
             if (ModelState.IsValid)
             {
+                cafe.OwnerId = Guid.NewGuid();
                 _context.Add(cafe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

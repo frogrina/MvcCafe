@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace MvcCafe.Models
+﻿namespace MvcCafe.Models
 {
     public class Cafe
     {
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public decimal CurrentLoad { get; set; }
-        public decimal MaxLoad { get; set; }
- // ownerid 
+        public int? CurrentLoad { get; set; }
+        public int? MaxLoad { get; set; }
+        public Guid? OwnerId { get; set; }
     }
 }

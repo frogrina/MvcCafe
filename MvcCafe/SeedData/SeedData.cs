@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using MvcCafe.Data;
-using System;
-using System.Linq;
 
 namespace MvcCafe.Models
 {
@@ -26,7 +23,8 @@ namespace MvcCafe.Models
                         Name = "Mac",
                         Description = "Was closed",
                         CurrentLoad = 0,
-                        MaxLoad = 100
+                        MaxLoad = 100,
+                        OwnerId = Guid.NewGuid()
                     },
 
                     new Cafe
@@ -34,7 +32,8 @@ namespace MvcCafe.Models
                         Name = "Tokyo City",
                         Description = "Food is't from Tokyo",
                         CurrentLoad = 10,
-                        MaxLoad = 200
+                        MaxLoad = 200,
+                        OwnerId = Guid.NewGuid()
                     },
 
                     new Cafe
@@ -42,7 +41,8 @@ namespace MvcCafe.Models
                         Name = "Teremok",
                         Description = "From Russia with love",
                         CurrentLoad = 15,
-                        MaxLoad = 50
+                        MaxLoad = 50,
+                        OwnerId = Guid.NewGuid()
                     },
 
                     new Cafe
@@ -50,7 +50,8 @@ namespace MvcCafe.Models
                         Name = "Bachroma",
                         Description = "Copy of Tokyo city",
                         CurrentLoad = 17,
-                        MaxLoad = 250
+                        MaxLoad = 250,
+                        OwnerId = Guid.NewGuid()
                     }
                 );
                 context.SaveChanges();
