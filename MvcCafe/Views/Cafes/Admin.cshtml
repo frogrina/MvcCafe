@@ -46,10 +46,9 @@
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
-                
-                <a asp-action="IncrementCurrentLoad" asp-route-id="@item.Id" asp-route-ownerId="@item.OwnerId" asp-route-incrementValue="-1">-</a>
+                <a asp-action="IncrementCurrentLoad" asp-route-id="@item.Id" asp-route-ownerId="@(ViewData["ownerId"].ToString())" asp-route-incrementValue="-1">-</a>
                 @Html.DisplayFor(modelItem => item.CurrentLoad)
-                <a asp-action="IncrementCurrentLoad" asp-route-id="@item.Id" asp-route-ownerId="@item.OwnerId" asp-route-incrementValue="1">+</a>
+                <a asp-action="IncrementCurrentLoad" asp-route-id="@item.Id" asp-route-ownerId="@(ViewData["ownerId"].ToString())" asp-route-incrementValue="1">+</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.MaxLoad)
